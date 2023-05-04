@@ -1,5 +1,8 @@
+"use client"
+
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import { SessionProvider, useSession } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -31,7 +34,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <>
+    <SessionProvider>
       <html lang="en" suppressHydrationWarning>
         <head />
         <body
@@ -49,6 +52,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           </ThemeProvider>
         </body>
       </html>
-    </>
+    </SessionProvider>
   )
 }
