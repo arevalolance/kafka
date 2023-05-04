@@ -7,11 +7,12 @@ import Post from "@/components/timeline/post"
 
 export default function IndexPage() {
   return (
-    <section className="container my-10">
-      <div className="container max-w-[768px]">
+    <section className="my-10">
+      <div className="max-w-[768px] sm:container">
         <FormBox placeholder="What's on your mind?" />
 
         <div className="mt-10 flex flex-col border-b-[1px]">
+          <Post />
           <Post />
           <Post />
           <Post />

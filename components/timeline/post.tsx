@@ -44,13 +44,13 @@ const Post = ({ isPage }: { isPage?: boolean }) => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="ml-14">
+      <CardContent className="md:ml-14">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
           vestibulum auctor nisi in faucibus. Nunc sed lacinia elit. Proin
           dignissim semper ultrices.
         </p>
-        <div className="w-[450px]">
+        <div className="w-full md:w-[450px]">
           <AspectRatio ratio={16 / 9} className="my-2 bg-muted">
             <Image
               src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
@@ -61,7 +61,7 @@ const Post = ({ isPage }: { isPage?: boolean }) => {
           </AspectRatio>
         </div>
       </CardContent>
-      <CardFooter className="ml-14 gap-x-4">
+      <CardFooter className="flex flex-wrap gap-4 md:ml-14">
         <Button
           variant="ghost"
           className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
