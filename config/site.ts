@@ -8,6 +8,10 @@ export const siteConfig = {
       title: "Home",
       href: "/",
     },
+    {
+      title: "Dashboard",
+      href: "/admin",
+    },
   ],
   links: {
     github: "https://github.com/abcd-edu",
