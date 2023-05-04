@@ -1,22 +1,21 @@
-# next-template
-
-A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
+# Kafka
+A proof-of-concept for [ABCD-EDU](https://github.com/abcd-edu)'s final project on NLP (CSE-30) on the topic of e-governance. This web-app is powered by NLP models concerning Sentiment Analysis and Topic Modelling.
 
 ## Usage
 
 ```bash
-npx create-next-app -e https://github.com/shadcn/next-template
+git clone git@github.com:arevalolance/kafka.git
+cd kafka
+npm install
+npm run dev
 ```
 
 ## Features
 
-- Radix UI Primitives
-- Tailwind CSS
-- Fonts with `next/font`
-- Icons from [Lucide](https://lucide.dev)
-- Dark mode with `next-themes`
-- Automatic import sorting with `@ianvs/prettier-plugin-sort-imports`
-- Tailwind CSS class sorting, merging and linting.
+- Topic Modelling
+- Sentiment Analysis
+- Dashboard for site metrics
+- General Social Media Features (Post and Replies)
 
 ## License
 
