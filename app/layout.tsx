@@ -71,11 +71,3 @@ export default function RootLayout({ children }: RootLayoutProps) {
     </html>
   )
 }
-
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      session: await getServerSession(context.req, context.res, authOptions),
-    },
-  }
-}
