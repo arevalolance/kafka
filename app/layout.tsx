@@ -2,6 +2,8 @@
 
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import Head from "next/head"
+import { getServerSession } from "next-auth"
 import { SessionProvider, useSession } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
@@ -10,6 +12,8 @@ import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
+
+import { authOptions } from "./api/auth/[...nextauth]/route"
 
 export const metadata: Metadata = {
   title: {
@@ -34,15 +38,27 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <SessionProvider>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
+    <html lang="en" suppressHydrationWarning>
+      <Head>
+        <title>{`${siteConfig.name}`}</title>
+        <meta name="description" content={siteConfig.description} />
+        <meta name="theme-color" content="#ffffff" />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content="#000000"
+        />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      </Head>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative flex min-h-screen flex-col">
               <SiteHeader />
@@ -50,8 +66,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
             <TailwindIndicator />
           </ThemeProvider>
-        </body>
-      </html>
-    </SessionProvider>
+        </SessionProvider>
+      </body>
+    </html>
   )
+}
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await getServerSession(context.req, context.res, authOptions),
+    },
+  }
 }
