@@ -1,11 +1,13 @@
-import Link from "next/link"
+"use client"
 
-import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
+import { useSession } from "next-auth/react"
+
 import FormBox from "@/components/timeline/form-box"
 import Post from "@/components/timeline/post"
 
 export default function IndexPage() {
+  const { data: session } = useSession()
+
   return (
     <section className="my-10 flex justify-center sm:container">
       <div className="max-w-[768px]">

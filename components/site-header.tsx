@@ -24,6 +24,7 @@ import { Label } from "./ui/label"
 export function SiteHeader() {
   const { data: session } = useSession()
   const [initials, setInitial] = useState<string>("")
+  const [isAdmin, setAdmin] = useState<boolean>(false)
 
   useEffect(() => {
     if (session?.user?.name) {
@@ -32,6 +33,7 @@ export function SiteHeader() {
       const firstLetter = names && names[0]
       const lastLetter = names && names[names.length - 1]
 
+      setAdmin(session?.user?.isAdmin || false)
       setInitial((firstLetter[0] || "") + (lastLetter[0] || ""))
     }
   }, [session])
@@ -56,14 +58,16 @@ export function SiteHeader() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuLabel>
-                      Hi, {session.user?.name?.split(" ")[0]}
+                      Hi, {session.user?.name?.split(" ")[0]} -{" "}
+                      {!isAdmin ? "Normal User" : "Admin"}
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Icons.dashboard className="mr-2 h-4 w-4" />
-                      Dashboard
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
+                    {isAdmin && (
+                      <DropdownMenuItem>
+                        <Icons.dashboard className="mr-2 h-4 w-4" />
+                        Dashboard
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem
                       className="hover:cursor-pointer"
                       onClick={() => signOut()}
@@ -71,27 +75,25 @@ export function SiteHeader() {
                       <Icons.signOut className="mr-2 h-4 w-4" />
                       <span>Logout</span>
                     </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Visit us at</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="hover:cursor-pointer">
+                      <Icons.gitHub className="mr-2 h-4 w-4" />
+                      <Link
+                        href={siteConfig.links.github}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <span>GitHub</span>
+                      </Link>
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
             ) : (
               <Button onClick={() => signIn("google")}>Login</Button>
             )}
-            {/* <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.gitHub className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
-              </div>
-            </Link> */}
             <ThemeToggle />
           </nav>
         </div>
