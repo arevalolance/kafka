@@ -6,7 +6,7 @@ import Post from "@/components/timeline/post"
 
 const PostPage = ({ params }) => {
   return (
-    <div className="my-5 flex max-w-[768px] flex-col gap-4 sm:container ">
+    <div className="my-10 flex flex-col gap-y-4 sm:container sm:max-w-[768px]">
       <div>
         <Post isPage={true} />
       </div>

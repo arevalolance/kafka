@@ -29,7 +29,7 @@ const Post = ({ isPage }: { isPage?: boolean }) => {
         "cursor-pointer rounded-none"
       )}
       onClick={() => {
-        router.push("/1")
+        router.push("/post/1")
       }}
     >
       <CardHeader>
