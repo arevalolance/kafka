@@ -25,10 +25,8 @@ interface PostTable {
 
 interface ReplyTable {
   id: Generated<number>
-  content: string
-  date_created: Date
   post_id: number
-  user_id: number
+  in_reply_to: number
 }
 
 export interface Database {

@@ -1,17 +1,20 @@
+import { NextApiRequest, NextApiResponse } from "next"
 import { NextResponse } from "next/server"
 
 import { db } from "@/lib/kysely"
 
-const POST = async (request: Request) => {
-  const { searchParams } = new URL(request.url)
-  console.log(request.url)
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { query } = req
 
-  const post_content = searchParams.get("post_content")
-  const posted_by_name = searchParams.get("posted_by_name")
-  const email = searchParams.get("posted_by_username")
-  const image_url = searchParams.get("image_url")
-
-  console.log(post_content, posted_by_name, email, image_url)
+  const {
+    post_content,
+    posted_by_name,
+    posted_by_username: email,
+    image_url,
+  } = query
 
   const queryUser = await db
     .selectFrom("users")
@@ -20,6 +23,7 @@ const POST = async (request: Request) => {
     .executeTakeFirst()
 
   if (queryUser) {
+    console.log(queryUser)
     const submitQuery = await db
       .insertInto("posts")
       .values({
@@ -36,10 +40,8 @@ const POST = async (request: Request) => {
       .returningAll()
       .execute()
 
-    return NextResponse.json(submitQuery)
+    return res.status(200).json(submitQuery)
   }
 
-  return NextResponse.json({ message: `No user with email ${email} found` })
+  return res.status(500).json({ message: `No user with email ${email} found` })
 }
-
-export { POST }

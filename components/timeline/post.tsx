@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Popover } from "@radix-ui/react-popover"
 
+import { getTimeElapsed } from "@/lib/time"
 import useIsAdmin from "@/lib/useIsAdmin"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -24,9 +25,37 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog"
 import { PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Separator } from "../ui/separator"
 
-const Post = ({ isPage }: { isPage?: boolean }) => {
+const Post = ({
+  content,
+  isPage = false,
+}: {
+  content: {
+    postId: number
+    content: string
+    dateCreated: Date
+    postedByName: string
+    postedByEmail: string
+    repliesCount: number
+    likes: number
+    dislikes: number
+    views: number
+    imageUrl?: string
+    userId: number
+    isAdmin: boolean
+    profileImageUrl: string
+  }
+  isPage?: boolean
+}) => {
   const router = useRouter()
-  const isAdmin = useIsAdmin()
+
+  const getInitials = (name) => {
+    console.log(content)
+    const names = name && name.split(" ")
+    const firstLetter = names && names[0]
+    const lastLetter = names && names[names.length - 1]
+
+    return firstLetter[0] || "" + lastLetter[0] || ""
+  }
 
   return (
     <Card
@@ -38,34 +67,40 @@ const Post = ({ isPage }: { isPage?: boolean }) => {
       <CardHeader>
         <div className="flex flex-row items-center gap-x-4">
           <Avatar>
-            <AvatarImage src="https://github.com/arevalolance.png" />
-            <AvatarFallback>LA</AvatarFallback>
+            <AvatarImage src={content.profileImageUrl} />
+            <AvatarFallback>{getInitials(content.postedByName)}</AvatarFallback>
           </Avatar>
           <div>
-            <CardTitle>Lance Arevalo</CardTitle>
-            <CardDescription>@arevalolance · 11h</CardDescription>
+            <CardTitle>{content.postedByName}</CardTitle>
+            <CardDescription>
+              @{content.postedByEmail} · {getTimeElapsed(content.dateCreated)}
+            </CardDescription>
           </div>
         </div>
       </CardHeader>
       <CardContent
-        className="delay-50 transition ease-in hover:cursor-pointer hover:bg-gray-400/10 md:pl-20"
-        onClick={() => router.push("/post/1")}
+        className={cn(
+          "mb-5 p-0 md:pl-20",
+          !isPage &&
+            "delay-50 transition ease-in hover:cursor-pointer hover:bg-gray-400/10 "
+        )}
+        onClick={() =>
+          !isPage ? router.push(`/replies/${content.postId}`) : null
+        }
       >
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          vestibulum auctor nisi in faucibus. Nunc sed lacinia elit. Proin
-          dignissim semper ultrices.
-        </p>
-        <div className="w-full md:w-[450px]">
-          <AspectRatio ratio={16 / 9} className="mt-2 bg-muted">
-            <Image
-              src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-              alt="Photo by Drew Beamer"
-              fill
-              className="rounded-md object-cover"
-            />
-          </AspectRatio>
-        </div>
+        <p>{content.content}</p>
+        {content.imageUrl && (
+          <div className="w-full md:w-[450px]">
+            <AspectRatio ratio={16 / 9} className="mt-2 bg-muted">
+              <Image
+                src={content.imageUrl}
+                alt="Photo by Drew Beamer"
+                fill
+                className="rounded-md object-cover"
+              />
+            </AspectRatio>
+          </div>
+        )}
       </CardContent>
       <CardFooter className="flex flex-col items-start gap-y-2 md:ml-14">
         <div className="flex flex-wrap items-start gap-4">
@@ -74,14 +109,14 @@ const Post = ({ isPage }: { isPage?: boolean }) => {
             className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
           >
             <Icons.replies className="h-4 w-4" />
-            <span>155</span>
+            <span>{content.repliesCount}</span>
           </Button>
           <Button
             variant="ghost"
             className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
           >
             <Icons.like className="h-4 w-4" />
-            <span>155</span>
+            <span>{content.likes}</span>
           </Button>
 
           <Button
@@ -89,7 +124,7 @@ const Post = ({ isPage }: { isPage?: boolean }) => {
             className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
           >
             <Icons.dislike className="h-4 w-4" />
-            <span>155</span>
+            <span>{content.dislikes}</span>
           </Button>
 
           <Button
@@ -97,10 +132,10 @@ const Post = ({ isPage }: { isPage?: boolean }) => {
             className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
           >
             <Icons.views className="h-4 w-4" />
-            <span>155</span>
+            <span>{content.views}</span>
           </Button>
         </div>
-        {isAdmin && (
+        {content.isAdmin && (
           <>
             <Separator />
             <div className="flex flex-wrap gap-2">

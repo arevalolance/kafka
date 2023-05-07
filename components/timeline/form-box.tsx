@@ -1,13 +1,25 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Loader2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 
+import { RepliesPage } from "@/types/ResponseTypes"
+import { generateParams } from "@/lib/query"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
-const FormBox = ({ placeholder }: { placeholder: string }) => {
+const FormBox = ({
+  updateTimeline,
+  placeholder,
+  isReplies = false,
+  inReplyTo,
+}: {
+  updateTimeline?: Dispatch<SetStateAction<RepliesPage[]>>
+  placeholder: string
+  isReplies?: boolean
+  inReplyTo?: number
+}) => {
   const [text, setText] = useState<string>("")
   const [isLoading, setLoading] = useState<boolean>(false)
   const { data: session } = useSession()
@@ -26,13 +38,16 @@ const FormBox = ({ placeholder }: { placeholder: string }) => {
       image_url: "",
     }
 
+    const replyParams = {
+      ...params,
+      in_reply_to: inReplyTo,
+    }
+
+    console.log("param is", inReplyTo)
+
     const submitQuery = await fetch(
-      "/api/post?" +
-        Object.keys(params)
-          .map(
-            (k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k])
-          )
-          .join("&"),
+      `/api/${isReplies ? "replies" : "post"}/submit?` +
+        generateParams(isReplies && inReplyTo ? replyParams : params),
       {
         method: "POST",
       }
@@ -40,6 +55,27 @@ const FormBox = ({ placeholder }: { placeholder: string }) => {
 
     // TODO: add results to timeline
     const res = await submitQuery.json()
+    console.log("IFWEAWERWA", res)
+    if (updateTimeline) {
+      updateTimeline((currPosts) => [
+        {
+          id: res.id,
+          content: res.content,
+          date_created: res.date_created,
+          posted_by_name: res.posted_by_name,
+          posted_by_username: res.posted_by_username,
+          likes: 0,
+          dislikes: 0,
+          views: 0,
+          image_url: res.image_url,
+          user_id: res.user_id,
+          is_admin: res.is_admin,
+          profile_image_url: session?.user.image as string,
+          repliesCount: 0,
+        },
+        ...currPosts,
+      ])
+    }
     setLoading(false)
   }
 
