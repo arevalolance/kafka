@@ -36,6 +36,7 @@ export default async function handler(
         views: 0,
         image_url: image_url as string,
         user_id: queryUser.id as number,
+        is_reply: false,
       })
       .returningAll()
       .execute()

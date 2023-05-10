@@ -29,6 +29,7 @@ export default async function handler(
         "users.profile_image_url",
       ])
       .select((eb) => [eb.fn.count("replies.in_reply_to").as("repliesCount")])
+      .where("posts.is_reply", "!=", true)
       .groupBy("posts.id")
       .groupBy("replies.id")
       .groupBy("users.id")

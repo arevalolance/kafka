@@ -24,7 +24,7 @@ export default function IndexPage() {
 
       if (res.ok) {
         const data = await res.json()
-        console.log(data)
+        // console.log(data)
         setCurrPosts((prevItems) => [...prevItems, ...data])
       }
     }
@@ -40,6 +40,7 @@ export default function IndexPage() {
             <FormBox
               updateTimeline={setCurrPosts}
               placeholder="What's on your mind?"
+              isReplies={false}
             />
           ) : (
             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">

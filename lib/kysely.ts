@@ -21,6 +21,7 @@ interface PostTable {
   views: number
   image_url?: string
   user_id: number
+  is_reply: boolean
 }
 
 interface ReplyTable {

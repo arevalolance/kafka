@@ -39,6 +39,7 @@ export default async function handler(
         dislikes: 0,
         views: 0,
         image_url: image_url as string,
+        is_reply: true,
         user_id: queryUser.id as number,
       })
       .returningAll()
