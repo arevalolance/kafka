@@ -192,10 +192,10 @@ const Overview = () => {
           </CardHeader>
           <CardContent>
             <TabsContent value="positive">
-              <TimeSeriesChart />
+              <TimeSeriesChart sentiment="positive" />
             </TabsContent>
             <TabsContent value="negative">
-              <TimeSeriesChart />
+              <TimeSeriesChart sentiment="negative" />
             </TabsContent>
           </CardContent>
         </Card>

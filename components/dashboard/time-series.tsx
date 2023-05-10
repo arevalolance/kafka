@@ -22,7 +22,11 @@ for (let i = 0; i < 100; i++) {
   currentDate.setDate(currentDate.getDate() + 1)
 }
 
-const TimeSeriesChart = () => {
+const TimeSeriesChart = ({
+  sentiment,
+}: {
+  sentiment: "positive" | "negative"
+}) => {
   return (
     <ResponsiveContainer width={"100%"} height={350}>
       <LineChart
@@ -36,7 +40,7 @@ const TimeSeriesChart = () => {
           type="monotone"
           dataKey="value"
           fill="#888888"
-          stroke="#adfa1d"
+          stroke={sentiment === "positive" ? "#1da5fa" : "#f54646"}
           strokeWidth={2}
         />
       </LineChart>
