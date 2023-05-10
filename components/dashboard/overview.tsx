@@ -117,9 +117,9 @@ const Overview = () => {
                 image={faker.image.avatar()}
                 name={faker.name.fullName()}
                 email={faker.internet.email()}
-                postCount={Math.floor(Math.random() * 5000) + 500}
-                positivity={Math.floor(Math.random() * 5000) + 500}
-                negativity={Math.floor(Math.random() * 5000) + 500}
+                postCount={Math.floor(Math.random() * 200) + 1000}
+                positivity={Math.floor(Math.random() * 1) + 30}
+                negativity={Math.floor(Math.random() * 1) + 50}
               />
             ))}
           </CardContent>
@@ -143,9 +143,9 @@ const Overview = () => {
                 image={faker.image.avatar()}
                 name={faker.name.fullName()}
                 email={faker.internet.email()}
-                postCount={Math.floor(Math.random() * 5000) + 500}
-                positivity={Math.floor(Math.random() * 5000) + 500}
-                negativity={Math.floor(Math.random() * 5000) + 500}
+                postCount={Math.floor(Math.random() * 200) + 1000}
+                positivity={Math.floor(Math.random() * 1) + 30}
+                negativity={Math.floor(Math.random() * 1) + 50}
               />
             ))}
           </CardContent>
@@ -167,9 +167,9 @@ const Overview = () => {
                 image={faker.image.avatar()}
                 name={faker.name.fullName()}
                 email={faker.internet.email()}
-                postCount={Math.floor(Math.random() * 5000) + 500}
-                positivity={Math.floor(Math.random() * 5000) + 500}
-                negativity={Math.floor(Math.random() * 5000) + 500}
+                postCount={Math.floor(Math.random() * 200) + 1000}
+                positivity={Math.floor(Math.random() * 1) + 30}
+                negativity={Math.floor(Math.random() * 1) + 50}
               />
             ))}
           </CardContent>
