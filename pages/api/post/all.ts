@@ -37,9 +37,6 @@ export default async function handler(
       .offset(Number(offset))
       .limit(10)
       .execute()
-    console.log("OFFSET", offset)
-
-    allPosts = allPosts.map((item) => ({ ...item, offset: offset }))
 
     if (allPosts) {
       return res.status(200).json(allPosts)
