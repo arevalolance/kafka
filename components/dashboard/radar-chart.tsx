@@ -117,7 +117,7 @@ const data = [
 
 const RadarMetrics = () => {
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer className={"m-auto"} width="80%" height={350}>
       <RadarChart data={data}>
         <PolarGrid />
         <PolarAngleAxis dataKey="name" />

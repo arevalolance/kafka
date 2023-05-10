@@ -1,5 +1,6 @@
 "use client"
 
+import { TabsContent } from "@radix-ui/react-tabs"
 import { Meh } from "lucide-react"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
@@ -12,8 +13,10 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card"
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
 import AccountData from "./account-data"
 import RadarMetrics from "./radar-chart"
+import TimeSeriesChart from "./time-series"
 
 const data = [
   {
@@ -161,7 +164,7 @@ const Overview = () => {
         </CardContent>
       </Card>
 
-      <div className="mt-4 grid md:grid-cols-2 lg:grid-cols-7">
+      <div className="mt-4 grid sm:gap-x-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
           <CardHeader>
             <CardTitle>Sentiment By Topic</CardTitle>
@@ -171,7 +174,7 @@ const Overview = () => {
           </CardContent>
         </Card>
 
-        <Card className="col-span-3 mt-4 lg:ml-4 lg:mt-0">
+        <Card className="col-span-3 mt-4 lg:mt-0">
           <CardHeader>
             <CardTitle>Most Active Accounts</CardTitle>
             <CardDescription>
@@ -194,8 +197,8 @@ const Overview = () => {
           <CardHeader>
             <CardTitle>Most Positive Accounts</CardTitle>
             <CardDescription>
-              This contains the top five accounts with the highest positivity
-              scores.
+              This contains the top five accounts with the highest{" "}
+              <strong className="underline">positive</strong> scores.
             </CardDescription>
           </CardHeader>
           {/* NOTE: SHOULD CONTAIN ONLY FIVE ACCOUNTS AT MOST */}
@@ -212,8 +215,8 @@ const Overview = () => {
           <CardHeader>
             <CardTitle>Most Negative Accounts</CardTitle>
             <CardDescription>
-              This contains the top five accounts with the highest negativity
-              scores.
+              This contains the top five accounts with the highest{" "}
+              <strong className="underline">negative</strong> scores.
             </CardDescription>
           </CardHeader>
           {/* NOTE: SHOULD CONTAIN ONLY FIVE ACCOUNTS AT MOST */}
@@ -226,6 +229,31 @@ const Overview = () => {
           </CardContent>
         </Card>
       </div>
+
+      <Tabs defaultValue="positive">
+        {" "}
+        <Card className="mt-4">
+          <CardHeader>
+            <CardTitle>
+              <div className="flex flex-row items-center justify-between">
+                <span>Sentiments over Time</span>
+                <TabsList className="grid w-fit grid-cols-2">
+                  <TabsTrigger value="positive">Positive</TabsTrigger>
+                  <TabsTrigger value="negative">Negative</TabsTrigger>
+                </TabsList>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TabsContent value="positive">
+              <TimeSeriesChart />
+            </TabsContent>
+            <TabsContent value="negative">
+              <TimeSeriesChart />
+            </TabsContent>
+          </CardContent>
+        </Card>
+      </Tabs>
     </div>
   )
 }
