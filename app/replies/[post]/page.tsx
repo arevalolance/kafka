@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { faker } from "@faker-js/faker"
 import useSWR from "swr"
 
 import { RepliesPage } from "@/types/ResponseTypes"
@@ -41,6 +42,28 @@ const PostPage = ({ params }) => {
               userId: post.user_id,
               isAdmin: post.is_admin,
               profileImageUrl: post.profile_image_url,
+              posScore: Math.floor(Math.random() * 8) + 50,
+              negScore: Math.floor(Math.random() * 8) + 30,
+              neutralScore: Math.floor(Math.random() * 8) + 30,
+              topics: faker.helpers.arrayElements(
+                [
+                  "Parks and Recreation",
+                  "Traffic Management",
+                  "Waste Management",
+                  "Housing",
+                  "Public Safety",
+                  "Infrastructure",
+                  "Healthcare",
+                  "Tourism and Travel Destinations",
+                  "Food",
+                  "Environment",
+                  "Arts and Culture",
+                  "Community Development",
+                  "Taxes Budget and Finance",
+                  "City Ordinances",
+                ],
+                3
+              ),
             }}
             isPage={true}
           />
@@ -81,6 +104,28 @@ const PostPage = ({ params }) => {
                     userId: item.user_id,
                     isAdmin: item.is_admin,
                     profileImageUrl: item.profile_image_url,
+                    posScore: Math.floor(Math.random() * 8) + 50,
+                    negScore: Math.floor(Math.random() * 8) + 30,
+                    neutralScore: Math.floor(Math.random() * 8) + 30,
+                    topics: faker.helpers.arrayElements(
+                      [
+                        "Parks and Recreation",
+                        "Traffic Management",
+                        "Waste Management",
+                        "Housing",
+                        "Public Safety",
+                        "Infrastructure",
+                        "Healthcare",
+                        "Tourism and Travel Destinations",
+                        "Food",
+                        "Environment",
+                        "Arts and Culture",
+                        "Community Development",
+                        "Taxes Budget and Finance",
+                        "City Ordinances",
+                      ],
+                      3
+                    ),
                   }}
                 />
               ))
