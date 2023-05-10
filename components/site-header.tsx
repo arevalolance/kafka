@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { signIn, signOut, useSession } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
@@ -25,6 +26,7 @@ export function SiteHeader() {
   const { data: session } = useSession()
   const [initials, setInitial] = useState<string>("")
   const [isAdmin, setAdmin] = useState<boolean>(false)
+  const router = useRouter()
 
   useEffect(() => {
     if (session?.user?.name) {
@@ -63,7 +65,10 @@ export function SiteHeader() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {isAdmin && (
-                      <DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="hover:cursor-pointer"
+                        onClick={() => router.push("/admin")}
+                      >
                         <Icons.dashboard className="mr-2 h-4 w-4" />
                         Dashboard
                       </DropdownMenuItem>
