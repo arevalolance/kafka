@@ -1,7 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/router"
 import { Check, ChevronsUpDown, Download } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -40,6 +42,12 @@ const topics = [
 const Dashboard = () => {
   const [open, setOpen] = React.useState<boolean>(false)
   const [value, setValue] = React.useState<string>("")
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  if (!session || !session.user.isAdmin) {
+    router.push("/")
+  }
 
   return (
     <div className="container my-5">
