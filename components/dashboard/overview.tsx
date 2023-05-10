@@ -118,8 +118,8 @@ const Overview = () => {
                 name={faker.name.fullName()}
                 email={faker.internet.email()}
                 postCount={Math.floor(Math.random() * 200) + 1000}
-                positivity={Math.floor(Math.random() * 1) + 30}
-                negativity={Math.floor(Math.random() * 1) + 50}
+                positivity={Math.floor(Math.random() * 8) + 30}
+                negativity={Math.floor(Math.random() * 8) + 50}
               />
             ))}
           </CardContent>
@@ -144,8 +144,8 @@ const Overview = () => {
                 name={faker.name.fullName()}
                 email={faker.internet.email()}
                 postCount={Math.floor(Math.random() * 200) + 1000}
-                positivity={Math.floor(Math.random() * 1) + 30}
-                negativity={Math.floor(Math.random() * 1) + 50}
+                positivity={Math.floor(Math.random() * 8) + 30}
+                negativity={Math.floor(Math.random() * 8) + 50}
               />
             ))}
           </CardContent>
@@ -168,8 +168,8 @@ const Overview = () => {
                 name={faker.name.fullName()}
                 email={faker.internet.email()}
                 postCount={Math.floor(Math.random() * 200) + 1000}
-                positivity={Math.floor(Math.random() * 1) + 30}
-                negativity={Math.floor(Math.random() * 1) + 50}
+                positivity={Math.floor(Math.random() * 8) + 30}
+                negativity={Math.floor(Math.random() * 8) + 50}
               />
             ))}
           </CardContent>
