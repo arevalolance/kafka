@@ -1,5 +1,6 @@
 "use client"
 
+import { Meh } from "lucide-react"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
 import { Icons } from "../icons"
@@ -12,54 +13,67 @@ import {
   CardTitle,
 } from "../ui/card"
 import AccountData from "./account-data"
+import RadarMetrics from "./radar-chart"
 
 const data = [
   {
-    name: "Jan",
+    name: "Topic 1",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Feb",
+    name: "Topic 2",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Mar",
+    name: "Topic 3",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Apr",
+    name: "Topic 4",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "May",
+    name: "Topic 5",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Jun",
+    name: "Topic 6",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Jul",
+    name: "Topic 7",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Aug",
+    name: "Topic 8",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Sep",
+    name: "Topic 9",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Oct",
+    name: "Topic 10",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Nov",
+    name: "Topic 11",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
   {
-    name: "Dec",
+    name: "Topic 12",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Topic 13",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Topic 14",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Topic 15",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
 ]
@@ -68,6 +82,18 @@ const Overview = () => {
   return (
     <div className="flex-1">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
+            <Icons.like className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">50000</div>
+            <p className="text-xs text-muted-foreground">
+              20% Positive - 80% Negative
+            </p>
+          </CardContent>
+        </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
@@ -94,33 +120,54 @@ const Overview = () => {
             <p className="text-xs text-muted-foreground">20% of total posts</p>
           </CardContent>
         </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Neutral Sentiments
+            </CardTitle>
+            <Meh className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">2350</div>
+            <p className="text-xs text-muted-foreground">20% of total posts</p>
+          </CardContent>
+        </Card>
       </div>
+
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle>Topics</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="90%" height={350}>
+            <BarChart data={data}>
+              <XAxis
+                dataKey="name"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `${value}`}
+              />
+              <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
 
       <div className="mt-4 grid md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Topics</CardTitle>
+            <CardTitle>Sentiment By Topic</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="90%" height={350}>
-              <BarChart data={data}>
-                <XAxis
-                  dataKey="name"
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                  tickFormatter={(value) => `${value}`}
-                />
-                <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <RadarMetrics />
           </CardContent>
         </Card>
 
@@ -129,6 +176,44 @@ const Overview = () => {
             <CardTitle>Most Active Accounts</CardTitle>
             <CardDescription>
               Your users has submitted a total of 1,000 posts.
+            </CardDescription>
+          </CardHeader>
+          {/* NOTE: SHOULD CONTAIN ONLY FIVE ACCOUNTS AT MOST */}
+          <CardContent className="flex flex-col gap-y-8">
+            <AccountData />
+            <AccountData />
+            <AccountData />
+            <AccountData />
+            <AccountData />
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="mt-4 grid gap-x-4 md:grid-cols-2 lg:grid-cols-8">
+        <Card className="col-span-4 mt-4 lg:mt-0">
+          <CardHeader>
+            <CardTitle>Most Positive Accounts</CardTitle>
+            <CardDescription>
+              This contains the top five accounts with the highest positivity
+              scores.
+            </CardDescription>
+          </CardHeader>
+          {/* NOTE: SHOULD CONTAIN ONLY FIVE ACCOUNTS AT MOST */}
+          <CardContent className="flex flex-col gap-y-8">
+            <AccountData />
+            <AccountData />
+            <AccountData />
+            <AccountData />
+            <AccountData />
+          </CardContent>
+        </Card>
+
+        <Card className="col-span-4 mt-4 lg:mt-0">
+          <CardHeader>
+            <CardTitle>Most Negative Accounts</CardTitle>
+            <CardDescription>
+              This contains the top five accounts with the highest negativity
+              scores.
             </CardDescription>
           </CardHeader>
           {/* NOTE: SHOULD CONTAIN ONLY FIVE ACCOUNTS AT MOST */}
