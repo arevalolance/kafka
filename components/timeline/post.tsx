@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Popover } from "@radix-ui/react-popover"
 import { useSession } from "next-auth/react"
 
+import { getInitials } from "@/lib/getInitials"
 import { getTimeElapsed } from "@/lib/time"
 import useIsAdmin from "@/lib/useIsAdmin"
 import { cn } from "@/lib/utils"
@@ -49,15 +50,6 @@ const Post = ({
 }) => {
   const router = useRouter()
   const { data: session } = useSession()
-
-  const getInitials = (name) => {
-    console.log(content)
-    const names = name && name.split(" ")
-    const firstLetter = names && names[0]
-    const lastLetter = names && names[names.length - 1]
-
-    return firstLetter[0] || "" + lastLetter[0] || ""
-  }
 
   return (
     <Card
