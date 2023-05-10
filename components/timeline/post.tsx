@@ -45,6 +45,10 @@ const Post = ({
     userId: number
     isAdmin: boolean
     profileImageUrl: string
+    posScore: number
+    negScore: number
+    neutralScore: number
+    topics: string[]
   }
   isPage?: boolean
 }) => {
@@ -135,20 +139,20 @@ const Post = ({
               </span>
               <div className="flex flex-wrap gap-2">
                 <Badge className="text-green-300 dark:text-green-900">
-                  50% Positive
+                  {content.posScore}% Positive
                 </Badge>
                 <Badge className="text-red-300 dark:text-red-900">
-                  40% Negative
+                  {content.negScore}% Negative
                 </Badge>
-                <Badge>10% Neutral</Badge>
+                <Badge>{content.neutralScore}% Neutral</Badge>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
               <span className="text-sm text-muted-foreground">Context:</span>
               <div className="flex flex-wrap gap-2">
-                <Badge>Government</Badge>
-                <Badge>Health</Badge>
-                <Badge>Politics</Badge>
+                {content.topics.map((item) => (
+                  <Badge key={item}>{item}</Badge>
+                ))}
               </div>
             </div>
           </>
