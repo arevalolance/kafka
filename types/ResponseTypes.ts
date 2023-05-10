@@ -12,4 +12,8 @@ export type RepliesPage = {
   is_admin: boolean
   profile_image_url: string
   repliesCount: number
+  posScore: number
+  negScore: number
+  neutralScore: number
+  topics: string[]
 }
