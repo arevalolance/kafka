@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Popover } from "@radix-ui/react-popover"
+import { useSession } from "next-auth/react"
 
 import { getTimeElapsed } from "@/lib/time"
 import useIsAdmin from "@/lib/useIsAdmin"
@@ -47,6 +48,7 @@ const Post = ({
   isPage?: boolean
 }) => {
   const router = useRouter()
+  const { data: session } = useSession()
 
   const getInitials = (name) => {
     console.log(content)
@@ -61,8 +63,13 @@ const Post = ({
     <Card
       className={cn(
         isPage ? "border-b-[1px]" : "border-b-[0px]",
-        "rounded-none"
+        "rounded-none",
+        !isPage &&
+          "delay-50 pb-[3px] transition ease-in hover:cursor-pointer hover:bg-gray-400/10"
       )}
+      onClick={() =>
+        !isPage ? router.push(`/replies/${content.postId}`) : null
+      }
     >
       <CardHeader>
         <div className="flex flex-row items-center gap-x-4">
@@ -78,16 +85,7 @@ const Post = ({
           </div>
         </div>
       </CardHeader>
-      <CardContent
-        className={cn(
-          "mb-5 p-0 md:pl-20",
-          !isPage &&
-            "delay-50 transition ease-in hover:cursor-pointer hover:bg-gray-400/10 "
-        )}
-        onClick={() =>
-          !isPage ? router.push(`/replies/${content.postId}`) : null
-        }
-      >
+      <CardContent className={cn("mb-5 p-0 md:pl-20")}>
         <p>{content.content}</p>
         {content.imageUrl && (
           <div className="w-full md:w-[450px]">
@@ -102,18 +100,19 @@ const Post = ({
           </div>
         )}
       </CardContent>
+      {/* FIXME: CLICKING A BUTTON IS NOT SEPARATAE FROM CLICKING THE DIV */}
       <CardFooter className="flex flex-col items-start gap-y-2 md:ml-14">
         <div className="flex flex-wrap items-start gap-4">
           <Button
             variant="ghost"
-            className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
+            className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-[2.5px] hover:bg-blue-400/30 hover:text-blue-300/80"
           >
             <Icons.replies className="h-4 w-4" />
             <span>{content.repliesCount}</span>
           </Button>
           <Button
             variant="ghost"
-            className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
+            className="flex h-fit w-fit flex-row gap-x-3 rounded-full  p-[2.5px] hover:bg-green-400/30 hover:text-green-300/80"
           >
             <Icons.like className="h-4 w-4" />
             <span>{content.likes}</span>
@@ -121,7 +120,7 @@ const Post = ({
 
           <Button
             variant="ghost"
-            className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
+            className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-[2.5px] hover:bg-red-400/30 hover:text-red-300/80"
           >
             <Icons.dislike className="h-4 w-4" />
             <span>{content.dislikes}</span>
@@ -129,13 +128,13 @@ const Post = ({
 
           <Button
             variant="ghost"
-            className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-0"
+            className="flex h-fit w-fit flex-row gap-x-3 rounded-full p-[2.5px]"
           >
             <Icons.views className="h-4 w-4" />
             <span>{content.views}</span>
           </Button>
         </div>
-        {content.isAdmin && (
+        {session?.user.isAdmin && (
           <>
             <Separator />
             <div className="flex flex-wrap gap-2">

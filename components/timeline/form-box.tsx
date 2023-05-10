@@ -84,9 +84,10 @@ const FormBox = ({
       <Textarea
         placeholder={placeholder}
         onChange={(e) => setText(e.target.value)}
+        disabled={session ? false : true}
       />
       <Button
-        disabled={isLoading}
+        disabled={isLoading || !session}
         aria-disabled={isLoading}
         onClick={() => onSubmit()}
         className="rounded-full"

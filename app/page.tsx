@@ -33,15 +33,23 @@ export default function IndexPage() {
   }, [currPage])
 
   return (
-    <section className="my-10 flex justify-center sm:container">
+    <section className="flex justify-center sm:container">
       <div className="w-[768px] max-w-[768px]">
-        <FormBox
-          updateTimeline={setCurrPosts}
-          placeholder="What's on your mind?"
-        />
+        <div className="my-5">
+          {session ? (
+            <FormBox
+              updateTimeline={setCurrPosts}
+              placeholder="What's on your mind?"
+            />
+          ) : (
+            <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+              Explore
+            </h3>
+          )}
+        </div>
 
         {/* TODO: add loading and use SWR to load initial content then use other technique to pull updates */}
-        <div className="mt-10 flex flex-col border-b-[1px]">
+        <div className="flex flex-col border-b-[1px]">
           {currPosts.length > 0
             ? currPosts.map((item) => (
                 <Post
