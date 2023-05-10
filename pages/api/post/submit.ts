@@ -40,7 +40,7 @@ export default async function handler(
       .returningAll()
       .execute()
 
-    return res.status(200).json(submitQuery)
+    return res.status(200).json(submitQuery[0])
   }
 
   return res.status(500).json({ message: `No user with email ${email} found` })
