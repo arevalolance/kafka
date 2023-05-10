@@ -12,4 +12,5 @@ export type RepliesPage = {
   is_admin: boolean
   profile_image_url: string
   repliesCount: number
+  offset: number
 }

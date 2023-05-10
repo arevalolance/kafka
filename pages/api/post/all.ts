@@ -10,7 +10,7 @@ export default async function handler(
   if (req.method === "GET") {
     const { offset } = query
 
-    const allPosts = await db
+    let allPosts = await db
       .selectFrom("posts")
       .innerJoin("users", "posts.user_id", "users.id")
       .leftJoin("replies", "posts.id", "replies.in_reply_to")
@@ -37,6 +37,9 @@ export default async function handler(
       .offset(Number(offset))
       .limit(10)
       .execute()
+    console.log("OFFSET", offset)
+
+    allPosts = allPosts.map((item) => ({ ...item, offset: offset }))
 
     if (allPosts) {
       return res.status(200).json(allPosts)
