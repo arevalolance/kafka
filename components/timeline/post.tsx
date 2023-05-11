@@ -81,7 +81,7 @@ const Post = ({
           </div>
         </div>
       </CardHeader>
-      <CardContent className={cn("mb-5 p-0 md:pl-20")}>
+      <CardContent className={cn("mb-5 px-5 sm:p-0 md:pl-20")}>
         <p>{content.content}</p>
         {content.imageUrl && (
           <div className="w-full md:w-[450px]">
